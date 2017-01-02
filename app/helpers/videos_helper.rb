@@ -1,11 +1,11 @@
 module VideosHelper
-include ActionView::Helpers::TagHelper
-include ActionView::Context
+  include ActionView::Helpers::TagHelper
+  include ActionView::Context
 
   def embed_html(video)
     if video.use_shared
-      update_from_config(video.embed_tag)
-      return embed_tag.html_safe
+      update_from_config(video.embed_tag, video)
+      return video.embed_tag.html_safe
     end
 
     data_setup = {}
@@ -14,13 +14,13 @@ include ActionView::Context
     end
 
     options = {
-      id: "video_#{video.id}",
-      class: "video-js #{Refinery::Videos.skin_css_class}",
-      width: video.config[:width],
-      height: video.config[:height],
-      data: data_setup.to_json,
-      poster: '' || video.poster.url
-      }
+        id: "video_#{video.id}",
+        class: "video-js #{Refinery::Videos.skin_css_class}",
+        width: video.config[:width],
+        height: video.config[:height],
+        data: data_setup.to_json,
+        poster: '' || video.poster.url
+    }
 
     sources = sources_html(video)
     content_tag(:video, sources_html(video), options, escape: false)
@@ -29,8 +29,8 @@ include ActionView::Context
   def sources_html(video)
     video.video_files.each.inject(ActiveSupport::SafeBuffer.new) do |buffer, file|
       options = {
-        src: file.use_external ? file.external_url : file.url,
-        type: file.mime_type || file.file_mime_type
+          src: file.use_external ? file.external_url : file.url,
+          type: file.mime_type || file.file_mime_type
 
       }
       source = tag(:source, options, escape: false )
@@ -38,7 +38,7 @@ include ActionView::Context
     end
   end
 
-  def update_from_config(tag)
+  def update_from_config(tag,video)
     tag.gsub!(/width="(\d*)?"/, "width=\"#{video.config[:width]}\"")
     tag.gsub!(/height="(\d*)?"/, "height=\"#{video.config[:height]}\"")
     # fix iframe overlay
