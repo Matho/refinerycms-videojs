@@ -2,13 +2,13 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem 'refinerycms', github: 'refinery/refinerycms'
-gem 'refinerycms-i18n', github: 'refinery/refinerycms-i18n'
-gem 'refinerycms-acts-as-indexed', github: 'refinery/refinerycms-acts-as-indexed'
+gem 'refinerycms', '~> 4.0.3'
+gem 'refinerycms-i18n', '~> 4.0.2'
+gem 'refinerycms-acts-as-indexed'
 gem "mime-types", "~> 1.25"
 
 group :test do
-  gem 'refinerycms-testing', github: 'refinery/refinerycms'
+  gem 'refinerycms-testing', '~> 4.0.3'
   gem 'poltergeist'
   gem 'capybara-email', '~> 2.4'
 end
@@ -31,8 +31,8 @@ if !ENV['TRAVIS'] || ENV['DB'] == 'postgresql'
 end
 
 # Refinery/rails should pull in the proper versions of these
-gem 'sass-rails', '~> 4.0.0'
-gem 'coffee-rails', '~> 4.0.0'
+gem 'sass-rails'
+gem 'coffee-rails'
 
 # Load local gems according to Refinery developer preference.
 if File.exist? local_gemfile = File.expand_path('../.gemfile', __FILE__)

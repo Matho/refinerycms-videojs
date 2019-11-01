@@ -2,7 +2,7 @@ module Refinery
   module Videos
     include ActiveSupport::Configurable
 
-    config_accessor :dragonfly_secret, :dragonfly_url_format, :dragonfly_url_host, :dragonfly_verify_urls,
+    config_accessor  :dragonfly_url_format, :dragonfly_url_host, :dragonfly_verify_urls,
                     :max_file_size, :pages_per_dialog, :pages_per_admin_index,
                     :datastore_root_path,
                     :s3_backend, :s3_bucket_name, :s3_region,
@@ -12,7 +12,7 @@ module Refinery
                     :skin_css_class
 
 
-    self.dragonfly_secret = Refinery::Core.dragonfly_secret
+    # self.dragonfly_secret = Refinery::Core.dragonfly_secret
     self.dragonfly_url_format = '/system/videos/:job/:basename.:format'
     self.dragonfly_url_host = ''
     self.dragonfly_verify_urls = true
@@ -29,7 +29,7 @@ module Refinery
       end
 
       def s3_backend
-        config.s3_backend.presence || Core.s3_backend
+        config.s3_backend.presence #|| Core.s3_backend
       end
 
       def s3_bucket_name
@@ -49,15 +49,15 @@ module Refinery
       end
 
       def custom_backend?
-        config.custom_backend_class.presence || Core.dragonfly_custom_backend?
+        config.custom_backend_class.presence #|| Core.dragonfly_custom_backend?
       end
 
       def custom_backend_class
-        config.custom_backend_class.presence || Core.dragonfly_custom_backend_class
+        config.custom_backend_class.presence #|| Core.dragonfly_custom_backend_class
       end
 
       def custom_backend_opts
-        config.custom_backend_opts.presence || Core.dragonfly_custom_backend_opts
+        config.custom_backend_opts.presence #|| Core.dragonfly_custom_backend_opts
       end
     end
   end

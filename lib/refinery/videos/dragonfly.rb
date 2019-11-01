@@ -13,9 +13,9 @@ module Refinery
             url_format Refinery::Videos.dragonfly_url_format
             url_host Refinery::Videos.dragonfly_url_host
             verify_urls Refinery::Videos.dragonfly_verify_urls
-            if Refinery::Videos.dragonfly_verify_urls
-              secret Refinery::Videos.dragonfly_secret
-            end
+            # if Refinery::Videos.dragonfly_verify_urls
+            #   secret Refinery::Videos.dragonfly_secret
+            # end
             dragonfly_url nil
             response_header 'Content-Disposition' 'attachment;'
             datastore :file, {:root_path => Refinery::Videos.datastore_root_path}
